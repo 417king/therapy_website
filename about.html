@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Am I — Maya Calloway, LMFT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sage: #7A9E7E;
+            --sage-light: #EEF3EB;
+            --sage-dark: #4D7254;
+            --tan: #C4AF94;
+            --tan-light: #F5F0E8;
+            --cream: #FDFCF8;
+            --text: #2E2820;
+            --text-muted: #6B5F54;
+            --radius: 14px;
+            --radius-lg: 28px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.7;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 48px;
+            background: rgba(253, 252, 248, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(196, 175, 148, 0.2);
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 400;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--sage-dark); }
+        .nav-links a.active { color: var(--text); }
+
+        .nav-cta {
+            background: var(--sage) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 100px;
+        }
+
+        .nav-cta:hover { background: var(--sage-dark) !important; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 65px; left: 0; right: 0;
+            background: var(--cream);
+            border-bottom: 1px solid rgba(196, 175, 148, 0.3);
+            padding: 28px 32px;
+            flex-direction: column;
+            gap: 22px;
+            z-index: 99;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .mobile-cta {
+            background: var(--sage);
+            color: white !important;
+            padding: 14px 24px;
+            border-radius: 100px;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            padding: 160px 24px 80px;
+            background: var(--sage-light);
+            text-align: center;
+        }
+
+        .eyebrow {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .page-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 6vw, 4rem);
+            font-weight: 300;
+            line-height: 1.15;
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── SHARED ── */
+        section { padding: 100px 24px; }
+        .container { max-width: 920px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--sage);
+            color: white;
+            text-decoration: none;
+            padding: 15px 34px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-primary:hover { background: var(--sage-dark); transform: translateY(-1px); }
+
+        /* ── MAIN BIO ── */
+        .bio { background: var(--cream); }
+
+        .bio-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .bio-photo {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            position: sticky;
+            top: 100px;
+        }
+
+        .bio-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .bio-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 28px;
+        }
+
+        .bio-text p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            font-weight: 300;
+            margin-bottom: 18px;
+            line-height: 1.8;
+        }
+
+        .bio-text p:last-of-type { margin-bottom: 32px; }
+
+        /* ── CREDENTIALS ── */
+        .credentials { background: var(--tan-light); }
+
+        .cred-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .cred-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+        }
+
+        .cred-icon {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .cred-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .cred-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ── VALUES ── */
+        .values { background: var(--sage-light); }
+
+        .values h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 48px;
+            color: var(--text);
+        }
+
+        .values-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .value-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 32px;
+            align-items: start;
+            padding: 36px 0;
+            border-bottom: 1px solid rgba(196,175,148,0.35);
+        }
+
+        .value-item:first-child { border-top: 1px solid rgba(196,175,148,0.35); }
+
+        .value-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--tan);
+            font-weight: 300;
+            line-height: 1;
+            padding-top: 4px;
+        }
+
+        .value-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .value-content p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* ── OUTSIDE THERAPY ── */
+        .outside { background: var(--cream); }
+
+        .outside-inner {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .outside-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .outside-text p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .outside-photo {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 4/5;
+        }
+
+        .outside-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── CTA BAND ── */
+        .cta-band {
+            background: var(--sage-dark);
+            padding: 90px 24px;
+            text-align: center;
+        }
+
+        .cta-band .eyebrow { color: rgba(255,255,255,0.55); }
+
+        .cta-band h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .cta-band p {
+            color: rgba(255,255,255,0.7);
+            max-width: 480px;
+            margin: 0 auto 40px;
+            font-size: 0.96rem;
+            font-weight: 300;
+        }
+
+        .btn-white {
+            display: inline-block;
+            background: white;
+            color: var(--sage-dark);
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-white:hover { background: var(--tan-light); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--text);
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            padding: 36px 24px;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+        footer p + p { margin-top: 8px; font-size: 0.74rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            nav { padding: 18px 24px; }
+
+            .bio-inner,
+            .outside-inner { grid-template-columns: 1fr; gap: 40px; }
+
+            .bio-photo { position: static; aspect-ratio: 4/3; }
+            .outside-photo { aspect-ratio: 4/3; order: -1; }
+
+            .cred-grid { grid-template-columns: 1fr; }
+
+            .value-item { grid-template-columns: 56px 1fr; gap: 20px; }
+
+            section { padding: 72px 20px; }
+            .page-header { padding: 130px 24px 64px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-logo">Maya Calloway, LMFT</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">Who Am I</a></li>
+        <li><a href="schedule.html" class="nav-cta">Book a Free Consultation</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">Who Am I</a>
+    <a href="schedule.html" class="mobile-cta">Book a Free Consultation</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <p class="eyebrow">About Me</p>
+    <h1>Getting to know the person behind the practice.</h1>
+</div>
+
+<!-- BIO -->
+<section class="bio">
+    <div class="container">
+        <div class="bio-inner">
+            <div class="bio-photo">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="Maya Calloway, LMFT">
+            </div>
+            <div class="bio-text">
+                <div class="section-label">My Story</div>
+                <h2>Hi, I'm Maya Calloway.</h2>
+                <p>I'm a Licensed Marriage and Family Therapist based in [Location], and I've spent the last [X] years helping adults navigate the moments in life that feel too heavy to carry alone — anxiety, burnout, the kind of grief that doesn't have an obvious name, and relationships that keep hitting the same walls.</p>
+                <p>I came to therapy through my own experience of it. I know what it's like to sit across from someone and not quite know where to start, to feel like you should have it more together by now, to wonder if what you're feeling is "bad enough" to deserve help. It is. You don't have to be in crisis to benefit from having a dedicated space to think.</p>
+                <p>My training is rooted in attachment theory and relational therapy, which means I pay close attention to patterns — how you relate to yourself, how you relate to others, and where those patterns came from. We'll look at the present and the past, but always in service of helping you move forward.</p>
+                <p>I work with adults on an individual basis, both in person and via telehealth. I'm direct, I'm warm, and I have a sense of humor. Therapy doesn't have to feel heavy the whole time — sometimes we'll laugh. That's okay too.</p>
+                <a href="schedule.html" class="btn-primary">Book a Free Consultation</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="credentials">
+    <div class="container">
+        <div class="section-label">Background</div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300; line-height: 1.2; color: var(--text);">Training &amp; Credentials</div>
+        <div class="cred-grid">
+            <div class="cred-card">
+                <div class="cred-icon">🎓</div>
+                <h3>Education</h3>
+                <p>M.A. in Marriage and Family Therapy, [University Name]<br><br>B.A. in Psychology, [University Name]</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-icon">📋</div>
+                <h3>License</h3>
+                <p>Licensed Marriage and Family Therapist (LMFT)<br>License #[XXXXXX]<br>[State] Board of Behavioral Sciences</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-icon">🌱</div>
+                <h3>Specializations</h3>
+                <p>Anxiety &amp; Stress<br>Life Transitions<br>Relationship Patterns<br>Attachment &amp; Identity<br>Adult Children of Difficult Families</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+    <div class="container">
+        <div class="section-label">What I Believe</div>
+        <h2>The values that shape how I work.</h2>
+        <div class="values-list">
+            <div class="value-item">
+                <div class="value-num">01</div>
+                <div class="value-content">
+                    <h3>You are not your diagnosis.</h3>
+                    <p>Labels can be useful shorthand, but they're not the whole story. I'm more interested in understanding you as a person than fitting you into a category. We'll use whatever frameworks are helpful and set aside the ones that aren't.</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-num">02</div>
+                <div class="value-content">
+                    <h3>The relationship matters.</h3>
+                    <p>Research consistently shows that the therapeutic relationship — the trust, safety, and honesty between therapist and client — is one of the strongest predictors of good outcomes. I take that seriously. If something isn't working between us, I want to know.</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-num">03</div>
+                <div class="value-content">
+                    <h3>Insight alone isn't enough.</h3>
+                    <p>Understanding why you do something is a good start. But real change happens when insight meets practice — when we take what you're learning in sessions and find ways to actually use it in your life. We'll work on both.</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-num">04</div>
+                <div class="value-content">
+                    <h3>You deserve care that respects your whole self.</h3>
+                    <p>I am committed to practicing in a way that's affirming of all identities — including race, culture, gender, sexuality, religion, and family structure. I'll never ask you to explain or justify who you are.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- OUTSIDE THERAPY -->
+<section class="outside">
+    <div class="container">
+        <div class="outside-inner">
+            <div class="outside-text">
+                <div class="section-label">Outside the Office</div>
+                <h2>A little more about me.</h2>
+                <p>When I'm not in session, I'm usually somewhere outside — hiking, at the farmers market, or trying to keep my houseplants alive with mixed results. I grew up in [City], and I still love [something personal about the area].</p>
+                <p>I'm a big reader, mostly fiction and the occasional memoir about people in impossible situations. I find that good stories are often about the same things therapy is about — the ways people are shaped by what happened to them, and what it takes to grow past it.</p>
+                <p>I live with [my partner / my dog / etc.] and I take my coffee too seriously.</p>
+            </div>
+            <div class="outside-photo">
+                <img src="https://images.unsplash.com/photo-1551893665-f843f600794e?w=800&q=80" alt="A warm, personal moment">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+    <div class="container">
+        <p class="eyebrow">Let's Connect</p>
+        <h2>Book a Free 15-Minute Consultation</h2>
+        <p>The consultation is a chance for us to talk briefly, see if it feels like a fit, and answer any questions you have. No pressure, no commitment.</p>
+        <a href="schedule.html" class="btn-white">Schedule a Consultation</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 Maya Calloway, LMFT &nbsp;·&nbsp; <a href="mailto:maya@example.com">maya@example.com</a> &nbsp;·&nbsp; [Location]</p>
+    <p>This site is for informational purposes only and does not constitute therapy or a therapeutic relationship.</p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
