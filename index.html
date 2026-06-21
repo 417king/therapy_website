@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Calloway, LMFT — Therapy in [Location]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sage: #7A9E7E;
+            --sage-light: #EEF3EB;
+            --sage-dark: #4D7254;
+            --tan: #C4AF94;
+            --tan-light: #F5F0E8;
+            --cream: #FDFCF8;
+            --text: #2E2820;
+            --text-muted: #6B5F54;
+            --radius: 14px;
+            --radius-lg: 28px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.7;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 48px;
+            background: rgba(253, 252, 248, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(196, 175, 148, 0.2);
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 400;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--sage-dark); }
+
+        .nav-cta {
+            background: var(--sage) !important;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 100px;
+        }
+
+        .nav-cta:hover { background: var(--sage-dark) !important; }
+
+        /* hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 65px; left: 0; right: 0;
+            background: var(--cream);
+            border-bottom: 1px solid rgba(196, 175, 148, 0.3);
+            padding: 28px 32px;
+            flex-direction: column;
+            gap: 22px;
+            z-index: 99;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .mobile-cta {
+            background: var(--sage);
+            color: white !important;
+            padding: 14px 24px;
+            border-radius: 100px;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            height: 100vh;
+            min-height: 620px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(238,243,235,0.55) 0%, rgba(238,243,235,0.72) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 0 24px;
+        }
+
+        .eyebrow {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 460px;
+            margin: 0 auto 36px;
+            font-weight: 300;
+        }
+
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--sage);
+            color: white;
+            text-decoration: none;
+            padding: 15px 34px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .btn-primary:hover { background: var(--sage-dark); transform: translateY(-1px); }
+
+        .btn-outline {
+            display: inline-block;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 15px 34px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 400;
+            border: 1px solid var(--tan);
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover { border-color: var(--sage); color: var(--sage-dark); }
+
+        /* ── SHARED ── */
+        section { padding: 100px 24px; }
+        .container { max-width: 920px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            font-weight: 500;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 56px;
+            color: var(--text);
+        }
+
+        /* ── INTRO ── */
+        .intro { background: var(--cream); }
+
+        .intro-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .intro-photo {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 4/5;
+        }
+
+        .intro-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .intro-text h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 28px;
+        }
+
+        .intro-text p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            font-weight: 300;
+            margin-bottom: 18px;
+        }
+
+        .intro-text .btn-primary { margin-top: 10px; }
+
+        /* ── HOW I WORK ── */
+        .how { background: var(--sage-light); }
+
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .how-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+        }
+
+        .how-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--tan);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+
+        .how-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .how-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.75;
+        }
+
+        /* ── SERVICES ── */
+        .services { background: var(--cream); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .service-card {
+            background: var(--tan-light);
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+        }
+
+        .service-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.75;
+        }
+
+        /* ── BOOK CTA BAND ── */
+        .book-band {
+            background: var(--sage-dark);
+            padding: 90px 24px;
+            text-align: center;
+        }
+
+        .book-band .eyebrow { color: rgba(255,255,255,0.55); }
+
+        .book-band h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .book-band p {
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            font-size: 0.96rem;
+            font-weight: 300;
+        }
+
+        .btn-white {
+            display: inline-block;
+            background: white;
+            color: var(--sage-dark);
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-white:hover { background: var(--tan-light); }
+
+        /* ── FAQ ── */
+        .faq { background: var(--cream); }
+
+        .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+        .faq-item {
+            border: 1px solid rgba(196,175,148,0.4);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .faq-q {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 22px 26px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.93rem;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .faq-q:hover { background: var(--sage-light); }
+
+        .faq-icon {
+            font-size: 1.3rem;
+            color: var(--sage);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+        .faq-a {
+            display: none;
+            padding: 0 26px 22px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .faq-item.open .faq-a { display: block; }
+
+        /* ── GOOD FAITH ESTIMATE ── */
+        .gfe { background: var(--tan-light); }
+
+        .gfe-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 56px;
+        }
+
+        .gfe-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .gfe-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.85;
+            margin-bottom: 14px;
+        }
+
+        .gfe-card a { color: var(--sage-dark); }
+
+        /* ── CONTACT ── */
+        .contact { background: var(--sage-light); }
+
+        .contact-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 300;
+            margin-bottom: 18px;
+        }
+
+        .contact-info > p {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+            font-weight: 300;
+            margin-bottom: 32px;
+        }
+
+        .contact-links { display: flex; flex-direction: column; gap: 14px; }
+
+        .contact-links a {
+            color: var(--sage-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-links a:hover { color: var(--text); }
+
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+        .fg { display: flex; flex-direction: column; gap: 6px; }
+
+        .fg label {
+            font-size: 0.74rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .fg input, .fg textarea {
+            background: white;
+            border: 1px solid rgba(196,175,148,0.5);
+            border-radius: var(--radius);
+            padding: 13px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .fg input:focus, .fg textarea:focus { border-color: var(--sage); }
+
+        .fg textarea { resize: vertical; min-height: 120px; }
+
+        .btn-submit {
+            background: var(--sage);
+            color: white;
+            border: none;
+            padding: 15px 36px;
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+
+        .btn-submit:hover { background: var(--sage-dark); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--text);
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            padding: 36px 24px;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+        footer p + p { margin-top: 8px; font-size: 0.74rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            nav { padding: 18px 24px; }
+
+            .intro-inner,
+            .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+
+            .intro-photo { aspect-ratio: 4/3; }
+
+            .how-grid,
+            .services-grid { grid-template-columns: 1fr; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .gfe-card { padding: 36px 28px; }
+
+            section { padding: 72px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-logo">Maya Calloway, LMFT</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">Who Am I</a></li>
+        <li><a href="schedule.html" class="nav-cta">Book a Free Consultation</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">Who Am I</a>
+    <a href="schedule.html" class="mobile-cta">Book a Free Consultation</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="eyebrow">Maya Calloway, LMFT</p>
+        <h1>A space to feel heard, understood, and supported.</h1>
+        <p>Individual therapy for adults navigating anxiety, life transitions, and relationship patterns.</p>
+        <div class="hero-buttons">
+            <a href="schedule.html" class="btn-primary">Book a Free 15-Min Consultation</a>
+            <a href="about.html" class="btn-outline">Who Am I</a>
+        </div>
+    </div>
+</section>
+
+<!-- HI I'M MAYA -->
+<section class="intro">
+    <div class="container">
+        <div class="intro-inner">
+            <div class="intro-photo">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="Maya Calloway, LMFT">
+            </div>
+            <div class="intro-text">
+                <div class="section-label">About Maya</div>
+                <h2>Hi, I'm Maya.</h2>
+                <p>I'm a licensed marriage and family therapist based in [Location], working with individuals who are ready to make sense of what they're going through — whether that's anxiety that won't let up, a major life change, or patterns in relationships that keep repeating.</p>
+                <p>My approach is warm, direct, and collaborative. I don't believe in one-size-fits-all therapy. Together we'll figure out what you actually need and build from there, at a pace that feels right for you.</p>
+                <p>I offer sessions in-person and via telehealth throughout [State]. I'm currently accepting new clients and would love to connect.</p>
+                <a href="about.html" class="btn-primary">More About Me</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="how">
+    <div class="container">
+        <div class="section-label">My Approach</div>
+        <h2 class="section-title">How I Work</h2>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-num">01</div>
+                <h3>We Start With You</h3>
+                <p>The first sessions are about getting to know you — your history, your patterns, what you're hoping changes. No agenda to rush through. We move at your pace.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">02</div>
+                <h3>We Work Together</h3>
+                <p>Therapy is a collaboration. I'll bring curiosity, honesty, and evidence-based tools. You'll bring your experience and your willingness. Neither of us has all the answers — and that's okay.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">03</div>
+                <h3>We Track What's Shifting</h3>
+                <p>Change is rarely dramatic. We'll regularly check in on how things are feeling — in sessions and in your life — so therapy stays meaningful and not just habitual.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+    <div class="container">
+        <div class="section-label">What I Offer</div>
+        <h2 class="section-title">Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Individual Therapy</h3>
+                <p>One-on-one sessions for adults working through anxiety, depression, trauma, life transitions, identity, and more. Sessions are 50 minutes, held weekly or biweekly.</p>
+            </div>
+            <div class="service-card">
+                <h3>Anxiety &amp; Stress</h3>
+                <p>Practical, grounded support for people who feel overwhelmed, chronically stressed, or stuck in cycles of worry. We'll work on understanding it and changing your relationship with it.</p>
+            </div>
+            <div class="service-card">
+                <h3>Life Transitions</h3>
+                <p>Career shifts, relationship changes, loss, moves, new roles — major changes can shake your sense of self. Therapy can help you navigate them with more clarity and less fear.</p>
+            </div>
+            <div class="service-card">
+                <h3>Relationship Patterns</h3>
+                <p>Whether it's how you show up in romantic relationships, friendships, or family — we can explore the patterns that keep repeating and figure out where they come from.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BOOK CTA BAND -->
+<section class="book-band">
+    <div class="container">
+        <p class="eyebrow">Ready to Start?</p>
+        <h2>Book a Free 15-Minute Consultation</h2>
+        <p>Not sure if we're a good fit? That's what the consultation is for. It's low-pressure, free, and takes about 15 minutes. No commitment required.</p>
+        <a href="schedule.html" class="btn-white">Schedule a Consultation</a>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <div class="container">
+        <div class="section-label">Questions</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    Do you accept insurance?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">I am currently an out-of-network provider. I can provide a monthly superbill that you can submit to your insurance company for potential reimbursement. I recommend checking with your insurer about your out-of-network mental health benefits before we begin.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    What does a session look like?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">Sessions are 50 minutes. Most clients meet weekly, especially at the start. We'll talk, explore, and sometimes I'll suggest things to try between sessions. There's no script — it depends entirely on where you are that week.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    Do you offer telehealth?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">Yes. I offer both in-person sessions in [Location] and telehealth sessions via a secure video platform for clients located anywhere in [State].</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    How long will therapy take?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">That depends on what you're working through. Some people reach their goals in a few months; others benefit from longer-term work. We'll regularly check in on your progress and adjust accordingly. You're never locked into anything.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    What are your rates?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">My rate is $[X] per 50-minute session. The free 15-minute consultation is always at no charge. I have a limited number of sliding scale spots available — please ask if cost is a barrier.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">
+                    What is your cancellation policy?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-a">I ask for 24 hours notice for cancellations or rescheduling. Late cancellations or no-shows may be charged the full session fee. I understand life happens — please just communicate with me and we'll work it out.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOOD FAITH ESTIMATE -->
+<section class="gfe">
+    <div class="container">
+        <div class="gfe-card">
+            <div class="section-label">Your Rights</div>
+            <h2>Good Faith Estimate</h2>
+            <p>You have the right to receive a "Good Faith Estimate" explaining how much your medical care will cost. Under the law, health care providers need to give patients who don't have insurance or who are not using insurance an estimate of the bill for medical items and services.</p>
+            <p>You have the right to receive a Good Faith Estimate for the total expected cost of any non-emergency items or services. Make sure your provider gives you one in writing at least 1 business day before your service. You can also ask your provider for a Good Faith Estimate before you schedule anything.</p>
+            <p>If you receive a bill that is at least $400 more than your Good Faith Estimate, you can dispute the bill. For questions or more information, visit <a href="https://www.cms.gov/nosurprises" target="_blank">cms.gov/nosurprises</a>.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+    <div class="container">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <div class="section-label">Get in Touch</div>
+                <h2>Let's Connect</h2>
+                <p>Have a question or want to schedule your free consultation? Reach out below or use the form — I typically respond within one business day.</p>
+                <div class="contact-links">
+                    <a href="mailto:maya@example.com">✉&nbsp; maya@example.com</a>
+                    <a href="tel:+10000000000">✆&nbsp; (000) 000-0000</a>
+                </div>
+            </div>
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="fg">
+                        <label>First Name</label>
+                        <input type="text" name="first" required placeholder="Jane">
+                    </div>
+                    <div class="fg">
+                        <label>Last Name</label>
+                        <input type="text" name="last" required placeholder="Smith">
+                    </div>
+                </div>
+                <div class="fg">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="jane@email.com">
+                </div>
+                <div class="fg">
+                    <label>Phone (optional)</label>
+                    <input type="tel" name="phone" placeholder="(000) 000-0000">
+                </div>
+                <div class="fg">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="What brings you here? Feel free to share as much or as little as you'd like."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 Maya Calloway, LMFT &nbsp;·&nbsp; <a href="mailto:maya@example.com">maya@example.com</a> &nbsp;·&nbsp; [Location]</p>
+    <p>This site is for informational purposes only and does not constitute therapy or a therapeutic relationship.</p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+    });
+
+    function toggleFaq(btn) {
+        btn.parentElement.classList.toggle('open');
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        // Replace this with your form handling (Formspree, Netlify Forms, etc.)
+        alert('Thanks for reaching out! I\'ll be in touch within one business day.');
+        e.target.reset();
+    }
+</script>
+
+</body>
+</html>
